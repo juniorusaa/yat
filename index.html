@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure Marine — Yat Turu & Kiralama</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ocean:#0a2540;--ocean-2:#0e3358;--ocean-3:#1a4a7a;
+  --teal:#4ec5b8;--teal-2:#7ad9ce;
+  --gold:#d4a574;--gold-2:#e8c08a;
+  --white:#ffffff;--off-white:#f4f8fa;--foam:#e8f0f4;
+  --text:#1a2a3a;--muted:#5a6b7a;--border:#d0dce4;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;color:var(--text);background:var(--white);line-height:1.6;overflow-x:hidden;}
+h1,h2,h3,h4,h5{font-family:'Playfair Display',serif;font-weight:500;line-height:1.15;letter-spacing:-1px;color:var(--ocean);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,37,64,.92);backdrop-filter:blur(20px);padding:20px 0;transition:.4s;}
+nav.scrolled{padding:12px 0;border-bottom:1px solid rgba(212,165,116,.15);}
+.nav-inner{max-width:1320px;margin:0 auto;padding:0 50px;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Playfair Display',serif;font-size:30px;color:#fff;letter-spacing:-1px;text-decoration:none;display:flex;align-items:baseline;gap:8px;font-weight:500;}
+.logo .dot{width:8px;height:8px;background:var(--gold);border-radius:50%;display:inline-block;}
+.logo small{font-family:'Outfit',sans-serif;font-size:9px;letter-spacing:3px;color:var(--gold);font-weight:400;text-transform:uppercase;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:13px;font-weight:400;letter-spacing:1.5px;transition:.3s;text-transform:uppercase;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:11px 26px;font-size:11px;letter-spacing:2px;font-weight:500;text-transform:uppercase;cursor:pointer;transition:.3s;font-family:inherit;}
+.nav-cta:hover{background:var(--gold);color:var(--ocean);}
+
+/* HERO */
+.hero{height:100vh;min-height:760px;position:relative;display:flex;align-items:center;overflow:hidden;background:linear-gradient(135deg,rgba(10,37,64,.6),rgba(10,37,64,.3)),url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=85') center/cover;}
+.hero::before{content:"";position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,rgba(10,37,64,.5),transparent);}
+.hero-inner{max-width:1320px;margin:0 auto;padding:0 50px;width:100%;position:relative;z-index:2;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:16px;color:var(--gold);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:30px;font-weight:500;}
+.hero-eyebrow::before{content:"";width:50px;height:1px;background:var(--gold);}
+.hero h1{font-size:clamp(54px,8vw,108px);color:#fff;max-width:1000px;margin-bottom:32px;font-weight:500;line-height:1;}
+.hero h1 em{font-style:italic;color:var(--gold);font-weight:400;}
+.hero-sub{font-size:19px;color:rgba(255,255,255,.8);max-width:540px;margin-bottom:48px;line-height:1.7;font-weight:300;}
+.hero-actions{display:flex;gap:18px;}
+.btn-primary{background:var(--gold);color:var(--ocean);padding:18px 40px;font-size:12px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;border:none;cursor:pointer;transition:.3s;font-family:inherit;text-decoration:none;display:inline-block;}
+.btn-primary:hover{background:var(--gold-2);transform:translateY(-2px);box-shadow:0 15px 30px rgba(212,165,116,.3);}
+.btn-outline{border:1px solid rgba(255,255,255,.3);color:#fff;padding:18px 40px;font-size:12px;letter-spacing:2.5px;font-weight:500;text-transform:uppercase;cursor:pointer;transition:.3s;background:transparent;font-family:inherit;text-decoration:none;display:inline-block;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero-stats{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);display:flex;gap:60px;padding-top:30px;border-top:1px solid rgba(255,255,255,.1);z-index:2;}
+.hs-item{text-align:center;color:#fff;}
+.hs-num{font-family:'Playfair Display',serif;font-size:36px;color:var(--gold);font-weight:500;}
+.hs-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;opacity:.7;margin-top:4px;}
+
+/* SECTION */
+section{padding:130px 0;}
+.container{max-width:1320px;margin:0 auto;padding:0 50px;}
+.section-eyebrow{color:var(--gold);font-size:11px;letter-spacing:4px;font-weight:500;text-transform:uppercase;margin-bottom:18px;display:inline-flex;align-items:center;gap:14px;}
+.section-eyebrow::before{content:"";width:30px;height:1px;background:var(--gold);}
+.section-title{font-size:clamp(40px,5vw,64px);max-width:780px;margin-bottom:24px;font-weight:500;}
+.section-title em{font-style:italic;color:var(--gold);font-weight:400;}
+.section-sub{font-size:17px;color:var(--muted);max-width:620px;line-height:1.7;font-weight:300;}
+
+/* TOURS */
+.tours{background:var(--off-white);}
+.tour-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:80px;}
+.tour-card{background:#fff;overflow:hidden;transition:.4s;cursor:pointer;}
+.tour-card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(10,37,64,.12);}
+.tour-img{aspect-ratio:4/3;overflow:hidden;position:relative;}
+.tour-img img{width:100%;height:100%;object-fit:cover;transition:.6s;}
+.tour-card:hover .tour-img img{transform:scale(1.05);}
+.tour-badge{position:absolute;top:16px;left:16px;background:var(--gold);color:var(--ocean);padding:6px 14px;font-size:10px;letter-spacing:2px;font-weight:600;text-transform:uppercase;}
+.tour-content{padding:30px;}
+.tour-loc{color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;margin-bottom:10px;}
+.tour-content h3{font-size:28px;margin-bottom:14px;font-weight:500;}
+.tour-content p{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:20px;}
+.tour-info{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);}
+.tour-info strong{color:var(--ocean);font-weight:500;display:block;margin-top:4px;font-size:14px;}
+.tour-price{color:var(--gold);font-family:'Playfair Display',serif;font-size:26px;font-weight:500;}
+
+/* FLEET */
+.fleet{background:var(--ocean);color:#fff;position:relative;overflow:hidden;}
+.fleet::before{content:"";position:absolute;top:0;right:0;width:700px;height:700px;background:radial-gradient(circle,rgba(78,197,184,.08) 0%,transparent 70%);border-radius:50%;}
+.fleet .section-eyebrow{color:var(--gold);}
+.fleet .section-title{color:#fff;}
+.fleet .section-title em{color:var(--gold);}
+.fleet .section-sub{color:rgba(255,255,255,.7);}
+.fleet-list{margin-top:80px;display:flex;flex-direction:column;gap:30px;}
+.fleet-item{display:grid;grid-template-columns:5fr 4fr 3fr;background:rgba(255,255,255,.04);border:1px solid rgba(212,165,116,.15);overflow:hidden;transition:.3s;}
+.fleet-item:hover{border-color:var(--gold);background:rgba(255,255,255,.06);}
+.fleet-img{aspect-ratio:5/3;background-size:cover;background-position:center;}
+.fleet-info{padding:40px 30px;display:flex;flex-direction:column;justify-content:center;}
+.fleet-info h3{font-size:32px;color:#fff;margin-bottom:6px;}
+.fleet-info .type{color:var(--gold);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
+.fleet-specs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px;}
+.fs-item{border-left:2px solid var(--gold);padding-left:12px;}
+.fs-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.fs-val{color:#fff;font-size:15px;margin-top:3px;font-weight:500;}
+.fleet-pricing{padding:40px 30px;background:rgba(0,0,0,.2);display:flex;flex-direction:column;justify-content:center;text-align:center;border-left:1px solid rgba(212,165,116,.15);}
+.fp-lbl{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.fp-amt{font-family:'Playfair Display',serif;font-size:46px;color:#fff;font-weight:500;line-height:1;}
+.fp-amt small{font-size:14px;display:block;color:rgba(255,255,255,.5);margin-top:6px;letter-spacing:1px;}
+.fleet-cta{background:var(--gold);color:var(--ocean);padding:14px;margin-top:20px;font-size:11px;letter-spacing:2px;font-weight:600;text-transform:uppercase;border:none;cursor:pointer;transition:.3s;font-family:inherit;text-decoration:none;display:inline-block;text-align:center;}
+.fleet-cta:hover{background:var(--gold-2);}
+
+/* EXPERIENCE */
+.experience{background:#fff;}
+.exp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:80px;border-top:1px solid var(--border);}
+.exp-card{padding:40px 30px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center;transition:.3s;}
+.exp-card:hover{background:var(--off-white);}
+.exp-card:last-child{border-right:none;}
+.exp-icon{width:60px;height:60px;margin:0 auto 20px;background:var(--foam);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ocean);}
+.exp-card h3{font-size:22px;margin-bottom:10px;font-weight:500;}
+.exp-card p{color:var(--muted);font-size:14px;line-height:1.7;}
+
+/* GALLERY */
+.gallery{background:var(--off-white);}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,200px);gap:16px;margin-top:80px;}
+.gallery-item{overflow:hidden;cursor:pointer;position:relative;}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:.5s;}
+.gallery-item:hover img{transform:scale(1.08);}
+.gallery-item.tall{grid-row:span 2;}
+
+/* TESTIMONIALS */
+.testimonials{background:var(--ocean);color:#fff;position:relative;}
+.testimonials::before{content:"\201C";position:absolute;top:60px;right:60px;font-family:'Playfair Display',serif;font-size:240px;color:var(--gold);opacity:.15;line-height:1;}
+.testimonials .section-eyebrow{color:var(--gold);}
+.testimonials .section-title{color:#fff;}
+.testimonials .section-title em{color:var(--gold);}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:70px;}
+.test-card{background:rgba(255,255,255,.04);border:1px solid rgba(212,165,116,.15);padding:40px;transition:.3s;}
+.test-card:hover{background:rgba(255,255,255,.07);border-color:var(--gold);}
+.test-stars{color:var(--gold);margin-bottom:20px;letter-spacing:4px;font-size:14px;}
+.test-text{color:rgba(255,255,255,.9);font-family:'Playfair Display',serif;font-size:20px;line-height:1.6;font-style:italic;margin-bottom:30px;}
+.test-author{display:flex;align-items:center;gap:14px;}
+.test-author img{width:48px;height:48px;border-radius:50%;object-fit:cover;}
+.test-author .name{color:#fff;font-weight:500;}
+.test-author .info{color:var(--gold);font-size:12px;margin-top:3px;letter-spacing:1px;}
+
+/* BOOKING */
+.booking{background:var(--off-white);}
+.book-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:start;}
+.book-form{background:#fff;padding:50px;box-shadow:0 10px 40px rgba(10,37,64,.06);}
+.form-step{font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:8px;}
+.book-form h3{font-size:32px;margin-bottom:30px;font-weight:500;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.form-field{display:flex;flex-direction:column;gap:8px;}
+.form-field label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ocean);font-weight:600;}
+.form-field input,.form-field select,.form-field textarea{border:none;border-bottom:1.5px solid var(--border);padding:12px 0;font-family:inherit;font-size:15px;outline:none;color:var(--text);background:transparent;transition:.3s;}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--gold);}
+.form-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230a2540'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right center;background-size:18px;}
+.book-form button{background:var(--ocean);color:#fff;padding:18px 38px;font-size:12px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;border:none;cursor:pointer;transition:.3s;width:100%;font-family:inherit;margin-top:18px;}
+.book-form button:hover{background:var(--gold);color:var(--ocean);}
+.book-side{position:sticky;top:100px;}
+.book-card{background:var(--ocean);color:#fff;padding:40px;margin-bottom:24px;}
+.bc-head{display:flex;align-items:center;gap:14px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:20px;}
+.bc-icon{width:50px;height:50px;background:rgba(212,165,116,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);}
+.bc-title{color:#fff;font-size:18px;font-weight:500;}
+.bc-sub{color:rgba(255,255,255,.6);font-size:12px;margin-top:3px;}
+.bc-list{list-style:none;}
+.bc-list li{padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;color:rgba(255,255,255,.85);font-size:14px;}
+.bc-list li:last-child{border-bottom:none;}
+.bc-list li span{color:var(--gold);font-weight:500;}
+
+/* FOOTER */
+footer{background:#050e1a;color:rgba(255,255,255,.7);padding:80px 0 30px;}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px;}
+.foot-brand{font-family:'Playfair Display',serif;font-size:32px;color:#fff;margin-bottom:10px;font-weight:500;}
+.foot-tag{color:var(--gold);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
+.foot-about p{font-size:14px;line-height:1.8;}
+.foot-col h5{color:#fff;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;font-weight:600;}
+.foot-col ul{list-style:none;}
+.foot-col li{margin-bottom:10px;}
+.foot-col a{color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;transition:.2s;}
+.foot-col a:hover{color:var(--gold);}
+.foot-bottom{padding-top:30px;border-top:1px solid rgba(255,255,255,.08);text-align:center;font-size:13px;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(40px);transition:all 1s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .tour-grid,.test-grid{grid-template-columns:1fr;}
+  .exp-grid{grid-template-columns:1fr 1fr;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gallery-item.tall{grid-row:auto;}
+  .book-grid{grid-template-columns:1fr;gap:40px;}
+  .book-side{position:static;}
+  .fleet-item{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr;gap:40px;}
+  .hero-stats{gap:30px;bottom:30px;flex-wrap:wrap;justify-content:center;}
+  section{padding:80px 0;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">Azure Marine<span class="dot"></span><small>Yat & Tur</small></a>
+    <ul class="nav-links">
+      <li><a href="#tours">Turlar</a></li>
+      <li><a href="#fleet">Filo</a></li>
+      <li><a href="#experience">Deneyim</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#booking">Rezervasyon</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Rezervasyon</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Bodrum · Marmaris · Göcek · Antalya</div>
+    <h1>Akdeniz'in mavi <em>sularında</em> özgürlük.</h1>
+    <p class="hero-sub">1995'ten bu yana Bodrum merkezli, mürettebatlı lüks yat kiralama ve günübirlik tekne turu deneyimi. 18 yat, 6 rota, sınırsız anı.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary">Hemen Rezervasyon</a>
+      <a href="#fleet" class="btn-outline">Filo İncele</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hs-item"><div class="hs-num">30+</div><div class="hs-lbl">Yıllık Deneyim</div></div>
+    <div class="hs-item"><div class="hs-num">18</div><div class="hs-lbl">Lüks Yat</div></div>
+    <div class="hs-item"><div class="hs-num">8.500+</div><div class="hs-lbl">Mutlu Müşteri</div></div>
+    <div class="hs-item"><div class="hs-num">12</div><div class="hs-lbl">Rota</div></div>
+  </div>
+</section>
+
+<!-- TOURS -->
+<section class="tours" id="tours">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow">Günübirlik Turlar</div>
+      <h2 class="section-title">Bir günlük <em>kaçışlar.</em></h2>
+      <p class="section-sub">Sabah 09:00'da başlayıp gün batımında dönen, öğle yemeği ve tüm ekipman dahil tur paketlerimiz.</p>
+    </div>
+    <div class="tour-grid reveal">
+      <div class="tour-card">
+        <div class="tour-img"><img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80" alt=""><div class="tour-badge">En Popüler</div></div>
+        <div class="tour-content">
+          <div class="tour-loc">Bodrum · Kara Ada Turu</div>
+          <h3>Kara Ada & Çifte Kalesi</h3>
+          <p>Bodrum yarımadasının en güney ucu, berrak turkuaz sularıyla ünlü Kara Ada'da gün boyu yüzme, öğle yemeği ve çevre koyları keşif.</p>
+          <div class="tour-info">
+            <div><span>Süre</span><strong>8 saat · 09:00-17:00</strong></div>
+            <div><span>Kişi Başı</span><strong class="tour-price">€95</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-img"><img src="https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=800&q=80" alt=""></div>
+        <div class="tour-content">
+          <div class="tour-loc">Göcek · 12 Adalar</div>
+          <h3>Göcek 12 Adalar Turu</h3>
+          <p>Göcek'in gizli koylarını kapsayan, dalgıçlık ve şnorkelle keşif imkanı sunan tam günlük macera. Cleopatra Hamamı koyu dahil.</p>
+          <div class="tour-info">
+            <div><span>Süre</span><strong>9 saat · 08:30-17:30</strong></div>
+            <div><span>Kişi Başı</span><strong class="tour-price">€125</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-img"><img src="https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=800&q=80" alt=""></div>
+        <div class="tour-content">
+          <div class="tour-loc">Marmaris · Kleopatra Adası</div>
+          <h3>Sedir Adası & Cleopatra Beach</h3>
+          <p>Efsanevi Kleopatra Plajı, antik kentin kalıntıları ve turkuaz koylarda unutulmaz bir gün. Rehberli tarih turu dahil.</p>
+          <div class="tour-info">
+            <div><span>Süre</span><strong>9 saat · 09:00-18:00</strong></div>
+            <div><span>Kişi Başı</span><strong class="tour-price">€110</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="fleet" id="fleet">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow">Filo</div>
+      <h2 class="section-title">Size özel <em>seçilmiş</em> yatlar.</h2>
+      <p class="section-sub">12 metreden 38 metreye, klasik guletlerden modern motor yatlara. Her bütçe ve gruba uygun, bakımlı filomuz.</p>
+    </div>
+    <div class="fleet-list reveal">
+      <div class="fleet-item">
+        <div class="fleet-img" style="background-image:url('https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=900&q=85')"></div>
+        <div class="fleet-info">
+          <h3>Aqua Blu</h3>
+          <div class="type">Lüks Motor Yat · 24m</div>
+          <div class="fleet-specs">
+            <div class="fs-item"><div class="fs-lbl">Kabin</div><div class="fs-val">4 Çift Kişilik</div></div>
+            <div class="fs-item"><div class="fs-lbl">Yolcu</div><div class="fs-val">8 Kişi</div></div>
+            <div class="fs-item"><div class="fs-lbl">Mürettebat</div><div class="fs-val">3 Profesyonel</div></div>
+            <div class="fs-item"><div class="fs-lbl">Hız</div><div class="fs-val">28 Knot</div></div>
+          </div>
+        </div>
+        <div class="fleet-pricing">
+          <div class="fp-lbl">Günlük Kiralama</div>
+          <div class="fp-amt">€2.800<small>Tüm yiyecek & içecek dahil</small></div>
+          <a href="#booking" class="fleet-cta">Rezervasyon Yap</a>
+        </div>
+      </div>
+      <div class="fleet-item">
+        <div class="fleet-img" style="background-image:url('https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=900&q=85')"></div>
+        <div class="fleet-info">
+          <h3>Deniz Yıldızı</h3>
+          <div class="type">Klasik Gulet · 18m</div>
+          <div class="fleet-specs">
+            <div class="fs-item"><div class="fs-lbl">Kabin</div><div class="fs-val">3 Çift Kişilik</div></div>
+            <div class="fs-item"><div class="fs-lbl">Yolcu</div><div class="fs-val">6 Kişi</div></div>
+            <div class="fs-item"><div class="fs-lbl">Mürettebat</div><div class="fs-val">2 Kaptan</div></div>
+            <div class="fs-item"><div class="fs-lbl">Hız</div><div class="fs-val">12 Knot</div></div>
+          </div>
+        </div>
+        <div class="fleet-pricing">
+          <div class="fp-lbl">Günlük Kiralama</div>
+          <div class="fp-amt">€1.600<small>Yemek & yakıt dahil</small></div>
+          <a href="#booking" class="fleet-cta">Rezervasyon Yap</a>
+        </div>
+      </div>
+      <div class="fleet-item">
+        <div class="fleet-img" style="background-image:url('https://images.unsplash.com/photo-1599391129728-eee6f0bd2819?w=900&q=85')"></div>
+        <div class="fleet-info">
+          <h3>Poseidon</h3>
+          <div class="type">Mega Yat · 38m</div>
+          <div class="fleet-specs">
+            <div class="fs-item"><div class="fs-lbl">Kabin</div><div class="fs-val">6 Lüks Suit</div></div>
+            <div class="fs-item"><div class="fs-lbl">Yolcu</div><div class="fs-val">12 Kişi</div></div>
+            <div class="fs-item"><div class="fs-lbl">Mürettebat</div><div class="fs-val">6 Profesyonel</div></div>
+            <div class="fs-item"><div class="fs-lbl">Hız</div><div class="fs-val">32 Knot</div></div>
+          </div>
+        </div>
+        <div class="fleet-pricing">
+          <div class="fp-lbl">Günlük Kiralama</div>
+          <div class="fp-amt">€7.500<small>Concierge hizmeti dahil</small></div>
+          <a href="#booking" class="fleet-cta">Rezervasyon Yap</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:680px;margin:0 auto;">
+      <div class="section-eyebrow" style="justify-content:center;">Azure Farkı</div>
+      <h2 class="section-title" style="margin:0 auto 18px;">Neden <em>Azure Marine?</em></h2>
+      <p class="section-sub" style="margin:0 auto;">30 yıllık deneyim, seçkin filo ve her detayda kusursuz hizmet anlayışı.</p>
+    </div>
+    <div class="exp-grid reveal">
+      <div class="exp-card">
+        <div class="exp-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 18l9-13 9 13M5 18h14l-2 4H7l-2-4z"/></svg></div>
+        <h3>Profesyonel Mürettebat</h3>
+        <p>Tüm yatlarımız deneyimli kaptan, aşçı ve servis elemanlarından oluşan 2-6 kişilik mürettebatla işletilir.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></div>
+        <h3>Şef Mutfağı</h3>
+        <p>Tüm yatlarımızda profesyonel şefler, taze Akdeniz mutfağı, vejetaryen ve özel diyet seçenekleriyle hizmetinizde.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg></div>
+        <h3>Çok Dilli Hizmet</h3>
+        <p>Türkçe, İngilizce, Almanca, Rusça ve Arapça mürettebat ile uluslararası misafirlerimize ev sahipliği yapıyoruz.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon"><svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg></div>
+        <h3>7/24 Concierge</h3>
+        <p>Rezervasyon öncesi ve tatiliniz boyunca özel istekleriniz için 7/24 concierge ekibimiz hizmetinizde.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:680px;margin:0 auto 0;">
+      <div class="section-eyebrow" style="justify-content:center;">Galeri</div>
+      <h2 class="section-title" style="margin:0 auto;">Anılardan <em>kesitler.</em></h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item tall"><img src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80" alt=""></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600&q=80" alt=""></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=600&q=80" alt=""></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1610641818989-c2051b5e2cfd?w=600&q=80" alt=""></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1599391129728-eee6f0bd2819?w=600&q=80" alt=""></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1542856391-010fb87dcfed?w=600&q=80" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-eyebrow">Misafirlerimiz Anlatıyor</div>
+      <h2 class="section-title">Deneyim <em>hikayeleri.</em></h2>
+    </div>
+    <div class="test-grid reveal">
+      <div class="test-card">
+        <div class="test-stars">★ ★ ★ ★ ★</div>
+        <p class="test-text">"Aqua Blu'da geçirdiğimiz 5 gün, hayatımızın en özel tatiliydi. Mürettebat inanılmaz ilgili, yemekler şahane, rotalar mükemmeldi."</p>
+        <div class="test-author">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="">
+          <div><div class="name">Markus Schneider</div><div class="info">Münih, Almanya</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★ ★ ★ ★ ★</div>
+        <p class="test-text">"Evlilik teklifimizi Poseidon'da yaptık. Concierge ekibi her şeyi mükemmel organize etti. Hayatımızın en romantik gecesiydi."</p>
+        <div class="test-author">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="">
+          <div><div class="name">Elif & Can</div><div class="info">İstanbul, Türkiye</div></div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★ ★ ★ ★ ★</div>
+        <p class="test-text">"Aile tatili için 12 kişilik yat kiraladık. Çocuklar için özel aktiviteler, ebeveynler için spa — herkes mutluydu."</p>
+        <div class="test-author">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="">
+          <div><div class="name">Andrey Volkov</div><div class="info">Moskova, Rusya</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:680px;margin:0 auto 60px;">
+      <div class="section-eyebrow" style="justify-content:center;">Rezervasyon</div>
+      <h2 class="section-title" style="margin:0 auto;">Hemen <em>ayırtın.</em></h2>
+    </div>
+    <div class="book-grid">
+      <form class="book-form reveal" onsubmit="event.preventDefault();alert('Talebiniz alındı! 12 saat içinde concierge ekibimiz sizinle iletişime geçecek.');this.reset();">
+        <div class="form-step">Adım 01 / 03</div>
+        <h3>Kişisel Bilgiler</h3>
+        <div class="form-row">
+          <div class="form-field"><label>Ad Soyad</label><input type="text" required></div>
+          <div class="form-field"><label>Telefon</label><input type="tel" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>E-Posta</label><input type="email" required></div>
+          <div class="form-field"><label>Kişi Sayısı</label><input type="number" min="1" max="20" placeholder="2"></div>
+        </div>
+        <div class="form-step" style="margin-top:30px;">Adım 02 / 03</div>
+        <h3>Tur Detayları</h3>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Tur Paketi</label>
+            <select>
+              <option>Günübirlik - Kara Ada (€95)</option>
+              <option>Günübirlik - Göcek 12 Adalar (€125)</option>
+              <option>Günübirlik - Kleopatra Adası (€110)</option>
+              <option>Yat Kiralama - Aqua Blu (€2.800/gün)</option>
+              <option>Yat Kiralama - Deniz Yıldızı (€1.600/gün)</option>
+              <option>Yat Kiralama - Poseidon (€7.500/gün)</option>
+            </select>
+          </div>
+          <div class="form-field"><label>Tarih</label><input type="date" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Başlangıç Saati</label><input type="time" value="09:00"></div>
+          <div class="form-field"><label>Süre (Gün)</label><input type="number" min="1" value="1"></div>
+        </div>
+        <div class="form-step" style="margin-top:30px;">Adım 03 / 03</div>
+        <h3>Özel İstekler</h3>
+        <div class="form-field" style="margin-bottom:18px;">
+          <label>Notlarınız</label>
+          <textarea placeholder="Doğum günü kutlaması, özel diyet, engelli erişimi vb..." style="resize:vertical;min-height:80px;"></textarea>
+        </div>
+        <button type="submit">Rezervasyon Talebini Gönder</button>
+      </form>
+      <div class="book-side">
+        <div class="book-card">
+          <div class="bc-head">
+            <div class="bc-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><div class="bc-title">7/24 Acil Hat</div><div class="bc-sub">Anlık ulaşılabilir</div></div>
+          </div>
+          <ul class="bc-list">
+            <li><span>Ofis</span>+90 252 313 45 67</li>
+            <li><span>Acil</span>+90 532 678 12 34</li>
+            <li><span>E-posta</span>book@azuremarine.com</li>
+            <li><span>WhatsApp</span>+90 532 678 12 34</li>
+          </ul>
+        </div>
+        <div class="book-card">
+          <div class="bc-head">
+            <div class="bc-icon"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg></div>
+            <div><div class="bc-title">Ana Ofis</div><div class="bc-sub">Bodrum Marina</div></div>
+          </div>
+          <ul class="bc-list">
+            <li>Yat Limanı Karşısı 14</li>
+            <li>Bodrum / Muğla</li>
+            <li>48400 Türkiye</li>
+            <li>Yaz: 7/24 · Kış: 09-18</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <div class="foot-brand">Azure Marine</div>
+        <div class="foot-tag">Lüks Yat Kiralama & Tur</div>
+        <p>1995'ten bu yana Türkiye'nin en güzel koylarını keşfe çıkarıyoruz. Bodrum merkezli filomuzla 12 ay boyunca hizmetinizdeyiz.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Turlar</h5>
+        <ul>
+          <li><a href="#">Kara Ada</a></li>
+          <li><a href="#">Göcek 12 Adalar</a></li>
+          <li><a href="#">Kleopatra Adası</a></li>
+          <li><a href="#">Gün Batımı Turu</a></li>
+          <li><a href="#">Balık Tutma</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Filo</h5>
+        <ul>
+          <li><a href="#">Aqua Blu</a></li>
+          <li><a href="#">Deniz Yıldızı</a></li>
+          <li><a href="#">Poseidon</a></li>
+          <li><a href="#">Tüm Yatlar</a></li>
+          <li><a href="#">Karşılaştır</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>İletişim</h5>
+        <ul>
+          <li><a href="#">+90 252 313 45 67</a></li>
+          <li><a href="#">book@azuremarine.com</a></li>
+          <li><a href="#">Bodrum Marina</a></li>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      © 2025 Azure Marine Yat Turizmi A.Ş. · Tüm hakları saklıdır. · KVKK · Çerez Politikası
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
