@@ -278,6 +278,26 @@ nav.mobile-bottom-nav,
 }
 </style>
 
+<style>
+/* === TOP NAV MOBILE HIDE === */
+@media(max-width:768px){
+  nav ul, nav > ul,
+  .menu-btn, .hamburger, .nav-toggle,
+  nav button, nav .btn,
+  [class*="menu-btn"], [class*="nav-btn"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  nav, #nav, header > nav, body > nav {
+    padding: 10px 5% !important;
+    min-height: unset !important;
+    height: auto !important;
+  }
+  nav .logo, nav [class*="logo"], nav [class*="brand"] {
+    font-size: 18px !important;
+  }
+}
+</style>
 </head>
 <body>
 
